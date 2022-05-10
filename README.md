@@ -1,7 +1,6 @@
-Furniture App
+Flutter Furniture App #Clean Architecture
 
-A nFlutter project.
 
-#Clean Architecture
+
 
 
