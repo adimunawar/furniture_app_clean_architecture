@@ -1,4 +1,7 @@
-Flutter Furniture App #Clean Architecture
+Flutter Furniture App
+#Clean Architecture 
+#Bloc
+#Dio
 
 
 
