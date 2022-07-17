@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:e_furniture/core/helpers/http_request_error_helper.dart';
 import 'package:flutter/material.dart';
@@ -106,7 +107,7 @@ class HttpRequestHelperImpl extends HttpRequestHelper {
       });
     } else {
       return await http
-          .post(address, headers: headers, body: body)
+          .post(address, headers: headers, body: jsonEncode(body))
           .timeout(const Duration(seconds: 30), onTimeout: () {
         return httpRequestErrorHelper(
             httpMethod: 'POST', error: 'Koneksi ke server habis', url: url);

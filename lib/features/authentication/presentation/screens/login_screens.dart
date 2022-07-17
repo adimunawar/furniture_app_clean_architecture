@@ -14,22 +14,29 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  bool isShowPassword = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
         listener: ((context, state) {
-          if (state is AuthenticatedUser) {}
+          // if (state is AuthenticatedUser) {
+          //   Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => const HomeScreen()));
+          // }
         }),
         builder: (context, state) {
-          // if (state is AuthenticationInitial) {
-          //   return Center(
-          //     child: Text("initial"),
-          //   );
-          // }
+          if (state is AuthenticationInitial) {
+            // return const Center(
+            //   child: Text("initial"),
+            // );
+          }
           if (state is AuthenticatedUser) {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const HomeScreen()));
+            // Navigator.of(context).push(
+            //     MaterialPageRoute(builder: (context) => const HomeScreen()));
+            return const Center(
+              child: Text("authenticated"),
+            );
           }
           return SafeArea(
             child: SingleChildScrollView(
@@ -122,9 +129,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 30,
                             child: TextField(
                               controller: passwordController,
-                              decoration: const InputDecoration(
-                                suffixIcon: Icon(Icons.remove_red_eye),
-                                enabledBorder: UnderlineInputBorder(
+                              obscureText: isShowPassword ? false : true,
+                              decoration: InputDecoration(
+                                suffixIcon: !isShowPassword
+                                    ? InkWell(
+                                        onTap: (() => setState(() {
+                                              isShowPassword = !isShowPassword;
+                                            })),
+                                        child: const Icon(Icons.visibility))
+                                    : InkWell(
+                                        onTap: () => setState(() {
+                                              isShowPassword = !isShowPassword;
+                                            }),
+                                        child:
+                                            const Icon(Icons.visibility_off)),
+                                enabledBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         width: 1.0, color: kGreyColor2)),
                               ),
@@ -134,37 +153,55 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: const EdgeInsets.only(
                                 top: 35, bottom: 40, right: 20),
                             child: Center(
-                                child: Text(
-                              "Forgot Password",
-                              style: primaryTextStyle.copyWith(fontSize: 18),
+                                child: InkWell(
+                              onTap: (() {}),
+                              child: Text(
+                                "Forgot Password",
+                                style: primaryTextStyle.copyWith(fontSize: 18),
+                              ),
                             )),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 30),
-                            child: Container(
-                              height: 50,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(4)),
-                              child: Center(
-                                child: Text(
-                                  "Log in",
-                                  style: primaryTextStyle.copyWith(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: semiBold),
-                                ),
-                              ),
-                            ),
+                            child: state is AuthenticationLoading
+                                ? const SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : InkWell(
+                                    onTap: () {
+                                      _loginUser(context);
+                                    },
+                                    child: Container(
+                                      height: 50,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                          color: Colors.black,
+                                          borderRadius:
+                                              BorderRadius.circular(4)),
+                                      child: Center(
+                                        child: Text(
+                                          "Log in",
+                                          style: primaryTextStyle.copyWith(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontWeight: semiBold),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 35, right: 20),
                             child: Center(
-                                child: Text(
-                              "SIGN UP",
-                              style: primaryTextStyle.copyWith(
-                                  fontSize: 18, fontWeight: medium),
+                                child: InkWell(
+                              onTap: () {},
+                              child: Text(
+                                "SIGN UP",
+                                style: primaryTextStyle.copyWith(
+                                    fontSize: 18, fontWeight: medium),
+                              ),
                             )),
                           ),
                         ],
@@ -185,7 +222,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _loginUser(BuildContext context) {
-    //dispatching the event
     BlocProvider.of<AuthenticationBloc>(context).add(LoginUserWithUsername(
         username: usernameController.text, password: passwordController.text));
   }

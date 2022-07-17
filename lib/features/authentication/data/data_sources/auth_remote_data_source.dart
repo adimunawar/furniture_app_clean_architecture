@@ -14,10 +14,10 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   @override
   Future<String> loginWithUsernamePassword(
       String username, String password) async {
-    String url = 'http://192.168.43.39:4000/users/authenticate';
-    const Map<String, String> headers = {'Accept': 'application/json'};
+    String url = 'http://192.168.43.39:8081/users/login';
+    Map<String, String> headers = {'Accept': 'application/json'};
     Map<String, String> body = {
-      'username': username,
+      'email': username,
       'password': password,
     };
     final response =
@@ -32,7 +32,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
       );
     }
     if (result['status']) {
-      String token = result['data']['token'];
+      String token = result['data'][0]['token'];
       return token;
     } else {
       throw ServerException(

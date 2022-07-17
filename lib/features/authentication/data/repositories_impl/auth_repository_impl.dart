@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:e_furniture/core/errors/exceptions.dart';
 import 'package:e_furniture/features/authentication/data/data_sources/auth_local_data_source.dart';
@@ -35,6 +37,8 @@ class AuthRepositoryImpl extends AuthRepository {
       await localDatasource.setAuthToken(token);
       return Right(token);
     } on ServerException catch (e) {
+      return Left(ServerFailure(code: 300, message: e.message));
+    } on TimeoutException catch (e) {
       return Left(ServerFailure(code: 300, message: e.message));
     }
   }

@@ -11,6 +11,9 @@ class AuthenticationBloc
   AuthenticationBloc(this.authRepository) : super(AuthenticationInitial()) {
     on<LoginUserWithUsername>((event, emit) async {
       emit(AuthenticationLoading());
+      Future.delayed(
+        const Duration(seconds: 15),
+      );
       final tokenOrFailure = await authRepository.loginUserWithUsernamePassword(
           event.username!, event.password!);
       tokenOrFailure.fold(
