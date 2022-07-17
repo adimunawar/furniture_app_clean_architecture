@@ -14,7 +14,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   @override
   Future<String> loginWithUsernamePassword(
       String username, String password) async {
-    String url = '';
+    String url = 'http://192.168.43.39:4000/users/authenticate';
     const Map<String, String> headers = {'Accept': 'application/json'};
     Map<String, String> body = {
       'username': username,
@@ -22,8 +22,9 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     };
     final response =
         await server.postRequest(url: url, headers: headers, body: body);
+
     Map<String, dynamic> result = json.decode(response.body);
-    print(result);
+
     if (result['status'] == null) {
       throw ServerException(
         message: 'Server Response Null, please contact Customer Service',

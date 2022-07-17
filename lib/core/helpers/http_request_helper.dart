@@ -102,7 +102,7 @@ class HttpRequestHelperImpl extends HttpRequestHelper {
             httpMethod: 'POST', error: 'Koneksi ke server habis', url: url);
       }).catchError((e) {
         return httpRequestErrorHelper(
-            httpMethod: 'POST', error: 'Sistem sedang sibuk', url: url);
+            httpMethod: 'POST', error: 'Sistem sedang sibuk euy', url: url);
       });
     } else {
       return await http
@@ -111,8 +111,9 @@ class HttpRequestHelperImpl extends HttpRequestHelper {
         return httpRequestErrorHelper(
             httpMethod: 'POST', error: 'Koneksi ke server habis', url: url);
       }).catchError((e) {
+        print(e);
         return httpRequestErrorHelper(
-            httpMethod: 'POST', error: 'Sistem sedang sibuk', url: url);
+            httpMethod: 'POST', error: 'Sistem sedang sibueeek', url: url);
       });
     }
   }
