@@ -1,21 +1,24 @@
 import 'package:e_furniture/core/ui_helper/theme.dart';
 import 'package:e_furniture/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:e_furniture/features/authentication/presentation/screens/home_screen.dart';
-import 'package:e_furniture/features/authentication/presentation/screens/register_screens.dart';
+import 'package:e_furniture/features/authentication/presentation/screens/login_screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final nameController = TextEditingController();
+  final confirmController = TextEditingController();
   bool isShowPassword = false;
+  bool isShowConfirmPassword = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,15 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Text("Hello !",
-                        style: primaryTextStyle.copyWith(
-                            color: kGreyColor,
-                            fontSize: 30,
-                            fontWeight: semiBold)),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text("WELCOME BACK",
+                    Text("WELCOME",
                         style: primaryTextStyle.copyWith(
                             fontSize: 30, fontWeight: medium)),
                   ],
@@ -81,6 +76,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text(
+                        "Name",
+                        style: primaryTextStyle.copyWith(color: kGreyColor2),
+                      ),
+                      SizedBox(
+                        height: 30,
+                        child: TextField(
+                          decoration: const InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(width: 1.0, color: kGreyColor2)),
+                          ),
+                          controller: nameController,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
                       Text(
                         "Email",
                         style: primaryTextStyle.copyWith(color: kGreyColor2),
@@ -126,6 +139,38 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        "Confirm Password",
+                        style: primaryTextStyle.copyWith(color: kGreyColor2),
+                      ),
+                      SizedBox(
+                        height: 30,
+                        child: TextField(
+                          controller: confirmController,
+                          obscureText: isShowConfirmPassword ? false : true,
+                          decoration: InputDecoration(
+                            suffixIcon: !isShowPassword
+                                ? InkWell(
+                                    onTap: (() => setState(() {
+                                          isShowConfirmPassword =
+                                              !isShowConfirmPassword;
+                                        })),
+                                    child: const Icon(Icons.visibility))
+                                : InkWell(
+                                    onTap: () => setState(() {
+                                          isShowConfirmPassword =
+                                              !isShowConfirmPassword;
+                                        }),
+                                    child: const Icon(Icons.visibility_off)),
+                            enabledBorder: const UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(width: 1.0, color: kGreyColor2)),
+                          ),
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 35, bottom: 40, right: 20),
@@ -152,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 borderRadius: BorderRadius.circular(4)),
                             child: Center(
                               child: Text(
-                                "Log in",
+                                "SIGN UP",
                                 style: primaryTextStyle.copyWith(
                                     color: Colors.white,
                                     fontSize: 18,
@@ -170,13 +215,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const RegisterScreen()));
+                                    builder: (context) => const LoginScreen()));
                           },
-                          child: Text(
-                            "SIGN UP",
-                            style: primaryTextStyle.copyWith(
-                                fontSize: 18, fontWeight: medium),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Alredy have account? ",
+                                style: primaryTextStyle,
+                              ),
+                              Text(
+                                "SIGN IN",
+                                style: primaryTextStyle.copyWith(
+                                    fontSize: 14, fontWeight: medium),
+                              ),
+                            ],
                           ),
                         )),
                       ),

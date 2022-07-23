@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:e_furniture/core/helpers/http_request_error_helper.dart';
@@ -95,27 +96,19 @@ class HttpRequestHelperImpl extends HttpRequestHelper {
   Future<http.Response> postRequest(
       {required String url, required Map<String, String> headers, body}) async {
     Uri address = Uri.parse(url);
-    if (body == null) {
-      return await http
-          .post(address, headers: headers)
-          .timeout(const Duration(seconds: 30), onTimeout: () {
-        return httpRequestErrorHelper(
-            httpMethod: 'POST', error: 'Koneksi ke server habis', url: url);
-      }).catchError((e) {
-        return httpRequestErrorHelper(
-            httpMethod: 'POST', error: 'Sistem sedang sibuk euy', url: url);
-      });
-    } else {
+    try {
       return await http
           .post(address, headers: headers, body: jsonEncode(body))
-          .timeout(const Duration(seconds: 30), onTimeout: () {
+          .timeout(const Duration(seconds: 12), onTimeout: () {
         return httpRequestErrorHelper(
-            httpMethod: 'POST', error: 'Koneksi ke server habis', url: url);
-      }).catchError((e) {
-        print(e);
-        return httpRequestErrorHelper(
-            httpMethod: 'POST', error: 'Sistem sedang sibueeek', url: url);
+            httpMethod: 'POST', error: 'Koneksi keserver habis', url: url);
       });
+    } on SocketException {
+      return httpRequestErrorHelper(
+          httpMethod: 'POST', error: 'Koneksi internet mati', url: url);
+    } catch (e) {
+      return httpRequestErrorHelper(
+          httpMethod: 'POST', error: 'Server sedang sibuk', url: url);
     }
   }
 }

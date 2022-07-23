@@ -20,5 +20,15 @@ class AuthenticationBloc
           (failure) => emit(AuthenticationFailure(errorHandler: failure)),
           (token) => emit(AuthenticatedUser()));
     });
+
+    on<RegisterUserWithEmail>(((event, emit) async {
+      emit(AuthenticationLoading());
+      final tokenOrFailure = await authRepository.createUser(
+          event.name!, event.email!, event.password!);
+
+      tokenOrFailure.fold(
+          (failure) => emit(AuthenticationFailure(errorHandler: failure)),
+          (token) => emit(AuthenticatedUser()));
+    }));
   }
 }

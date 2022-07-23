@@ -17,7 +17,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<Either<Failure, String>> createUser(
-      String username, String fullname, String email, String password) {
+      String username, String email, String password) {
     // TODO: implement createUser
     throw UnimplementedError();
   }
@@ -32,8 +32,7 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<Either<Failure, String>> loginUserWithUsernamePassword(
       String username, String password) async {
     try {
-      String token =
-          await remoteDataSource.loginWithUsernamePassword(username, password);
+      String token = await remoteDataSource.resgiter(username, password);
       await localDatasource.setAuthToken(token);
       return Right(token);
     } on ServerException catch (e) {
