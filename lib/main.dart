@@ -5,6 +5,7 @@ import 'package:e_furniture/screens/splash_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import './service_locator.dart' as service_locator;
 import 'service_locator.dart';
 
@@ -28,10 +29,11 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
+          builder: EasyLoading.init(),
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: SplashScreen(),
+          home: const SplashScreen(),
         ));
   }
 }

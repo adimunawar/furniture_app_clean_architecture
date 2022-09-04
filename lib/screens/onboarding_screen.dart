@@ -1,7 +1,9 @@
+import 'package:e_furniture/core/bloc/app_level_bloc.dart';
 import 'package:e_furniture/core/ui_helper/theme.dart';
 import 'package:e_furniture/features/authentication/presentation/screens/login_screens.dart';
+import 'package:e_furniture/service_locator.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -17,7 +19,7 @@ class OnBoardingScreen extends StatelessWidget {
         ),
         SafeArea(
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 30),
+            margin: const EdgeInsets.symmetric(horizontal: 30),
             width: double.infinity,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -28,14 +30,14 @@ class OnBoardingScreen extends StatelessWidget {
                   style: primaryTextStyle.copyWith(
                       fontWeight: semiBold, fontSize: 24),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Text(
                   "HOME BEAUTIFUL",
                   style: boldTextStyle.copyWith(fontSize: 30),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 35,
                 ),
                 Padding(
@@ -51,12 +53,15 @@ class OnBoardingScreen extends StatelessWidget {
                 Center(
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.black, minimumSize: Size(159, 50)),
+                          primary: Colors.black,
+                          minimumSize: const Size(159, 50)),
                       onPressed: () {
+                        BlocProvider.of<AppLevelBloc>(context)
+                            .add(SetIsFirstTime());
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
+                                builder: (context) => const LoginScreen()));
                       },
                       child: Text(
                         "Get Started",

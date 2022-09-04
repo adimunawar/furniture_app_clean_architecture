@@ -1,0 +1,12 @@
+{
+    "status": true,
+    "message": "Registrasi berhasil",
+    "data": [
+        {
+            "token": "12345",
+            "id": 28,
+            "email": "piyang@gmail.com",
+            "phone": "085219486369"
+        }
+    ]
+}

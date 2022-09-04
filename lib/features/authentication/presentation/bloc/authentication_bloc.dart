@@ -8,27 +8,36 @@ part 'authentication_state.dart';
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final AuthRepository authRepository;
-  AuthenticationBloc(this.authRepository) : super(AuthenticationInitial()) {
-    on<LoginUserWithUsername>((event, emit) async {
-      emit(AuthenticationLoading());
-      Future.delayed(
-        const Duration(seconds: 15),
-      );
-      final tokenOrFailure = await authRepository.loginUserWithUsernamePassword(
-          event.username!, event.password!);
-      tokenOrFailure.fold(
-          (failure) => emit(AuthenticationFailure(errorHandler: failure)),
-          (token) => emit(AuthenticatedUser()));
-    });
+  AuthenticationBloc(this.authRepository) : super(const AuthenticationState()) {
+    on<LoginUserWithUsername>(_onLogin);
+    on<RegisterUserWithEmail>(_onRegister);
+  }
 
-    on<RegisterUserWithEmail>(((event, emit) async {
-      emit(AuthenticationLoading());
-      final tokenOrFailure = await authRepository.createUser(
-          event.name!, event.email!, event.password!);
+  Future<void> _onLogin(
+    LoginUserWithUsername event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    emit(state.copyWith(status: CategoryStatus.loading));
+    Future.delayed(const Duration(milliseconds: 4500));
+    final tokenOrFailure = await authRepository.loginUserWithUsernamePassword(
+        event.username!, event.password!);
+    tokenOrFailure.fold(
+        (failure) => emit(state.copyWith(
+            status: CategoryStatus.failure, errorHandler: failure)),
+        (token) => emit(state.copyWith(status: CategoryStatus.success)));
+  }
 
-      tokenOrFailure.fold(
-          (failure) => emit(AuthenticationFailure(errorHandler: failure)),
-          (token) => emit(AuthenticatedUser()));
-    }));
+  Future<void> _onRegister(
+    RegisterUserWithEmail event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    emit(state.copyWith(status: CategoryStatus.loading));
+    final tokenOrFailure = await authRepository.createUser(
+        event.name!, event.email!, event.password!);
+    tokenOrFailure.fold(
+        (failure) => emit(state.copyWith(
+            status: CategoryStatus.failure, errorHandler: failure)),
+        (token) => emit(state.copyWith(status: CategoryStatus.success)));
+    ;
   }
 }

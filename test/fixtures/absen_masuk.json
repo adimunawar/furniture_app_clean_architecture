@@ -1,0 +1,9 @@
+{
+    "status": true,
+    "message": "Login berhasil",
+    "data": [
+        {
+            "token": "12345"
+        }
+    ]
+}

@@ -13,7 +13,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
   final confirmController = TextEditingController();
@@ -106,7 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 borderSide:
                                     BorderSide(width: 1.0, color: kGreyColor2)),
                           ),
-                          controller: usernameController,
+                          controller: emailController,
                         ),
                       ),
                       const SizedBox(
@@ -187,7 +187,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         padding: const EdgeInsets.only(right: 30),
                         child: InkWell(
                           onTap: () {
-                            _loginUser(context);
+                            _registerUser(context);
                           },
                           child: Container(
                             height: 50,
@@ -249,15 +249,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void _loginUser(BuildContext context) {
-    BlocProvider.of<AuthenticationBloc>(context).add(LoginUserWithUsername(
-        username: usernameController.text, password: passwordController.text));
+  void _registerUser(BuildContext context) {
+    BlocProvider.of<AuthenticationBloc>(context).add(RegisterUserWithEmail(
+        name: nameController.text,
+        password: passwordController.text,
+        email: emailController.text));
     AuthenticationState state = context.read<AuthenticationBloc>().state;
-    if (state is AuthenticatedUser) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-    } else if (state is AuthenticationFailure) {
-      print(state.errorHandler!.message);
-    }
+
+    // if (state is AuthenticatedUser) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+    // } else if (state is AuthenticationFailure) {
+    //   print(state.errorHandler!.message);
+    // }
   }
 }
