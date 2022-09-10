@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_furniture/features/authentication/data/data_sources/auth_local_data_source.dart';
-import 'package:e_furniture/utils/shared.dart';
+import 'package:e_furniture/core/utils/shared.dart';
 import 'package:equatable/equatable.dart';
 
 part 'app_level_event.dart';

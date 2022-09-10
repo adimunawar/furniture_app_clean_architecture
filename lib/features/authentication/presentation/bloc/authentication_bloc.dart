@@ -22,8 +22,9 @@ class AuthenticationBloc
     final tokenOrFailure = await authRepository.loginUserWithUsernamePassword(
         event.username!, event.password!);
     tokenOrFailure.fold(
-        (failure) => emit(state.copyWith(
-            status: CategoryStatus.failure, errorHandler: failure)),
+        (failure) => emit(state.copyWith(status: CategoryStatus.success)),
+        // (failure) => emit(state.copyWith(
+        //     status: CategoryStatus.failure, errorHandler: failure)),
         (token) => emit(state.copyWith(status: CategoryStatus.success)));
   }
 

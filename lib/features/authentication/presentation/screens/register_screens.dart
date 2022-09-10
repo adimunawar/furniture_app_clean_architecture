@@ -1,6 +1,6 @@
 import 'package:e_furniture/core/ui_helper/theme.dart';
 import 'package:e_furniture/features/authentication/presentation/bloc/authentication_bloc.dart';
-import 'package:e_furniture/features/authentication/presentation/screens/home_screen.dart';
+import 'package:e_furniture/features/home/presentation/screens/home_screen.dart';
 import 'package:e_furniture/features/authentication/presentation/screens/login_screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

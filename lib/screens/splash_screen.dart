@@ -1,9 +1,10 @@
 import 'package:e_furniture/core/bloc/app_level_bloc.dart';
-import 'package:e_furniture/features/authentication/presentation/screens/home_screen.dart';
+import 'package:e_furniture/features/home/presentation/screens/home_screen.dart';
 import 'package:e_furniture/features/authentication/presentation/screens/login_screens.dart';
 import 'package:e_furniture/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,18 +19,13 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocConsumer<AppLevelBloc, AppLevelState>(
       listener: (context, state) {
         if (state is AppFirstTime) {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const OnBoardingScreen()));
+          context.go('/onboarding');
         }
         if (state is AppLevelUnauthenticated) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const LoginScreen()));
+          context.go('/login');
         }
         if (state is AppLevelAuthenticated) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()));
+          context.go('/home');
         }
       },
       builder: (context, state) {

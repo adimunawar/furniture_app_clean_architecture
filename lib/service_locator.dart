@@ -10,6 +10,7 @@ import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/helpers/http_request_helper.dart';
+import 'features/home/presentation/bloc/cubit/rowmenu_cubit.dart';
 
 final locator = GetIt.instance;
 Future<void> init() async {
@@ -18,6 +19,8 @@ Future<void> init() async {
   locator.registerFactory(() => AuthenticationBloc(locator()));
   locator.registerFactory(() => AppLevelBloc(locator()));
 
+//cubit
+  locator.registerFactory(() => RowmenuCubit());
   //useCases
   locator.registerLazySingleton(() => LoginWithUsernamePassword(locator()));
 

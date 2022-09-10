@@ -1,10 +1,12 @@
 import 'package:e_furniture/core/ui_helper/theme.dart';
 import 'package:e_furniture/features/authentication/presentation/bloc/authentication_bloc.dart';
-import 'package:e_furniture/features/authentication/presentation/screens/home_screen.dart';
+import 'package:e_furniture/features/home/presentation/screens/home_screen.dart';
 import 'package:e_furniture/features/authentication/presentation/screens/register_screens.dart';
+import 'package:e_furniture/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
   bool isShowPassword = false;
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
@@ -27,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
         } else if (state.status!.isSuccess) {
           EasyLoading.dismiss();
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()));
+              MaterialPageRoute(builder: (context) => const MainScreen()));
         } else if (state.status!.isError) {
           EasyLoading.dismiss();
           EasyLoading.showToast("${state.errorHandler!.message}",

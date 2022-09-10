@@ -4,6 +4,7 @@ import 'package:e_furniture/features/authentication/presentation/screens/login_s
 import 'package:e_furniture/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -53,15 +54,12 @@ class OnBoardingScreen extends StatelessWidget {
                 Center(
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.black,
+                          backgroundColor: Colors.black,
                           minimumSize: const Size(159, 50)),
                       onPressed: () {
                         BlocProvider.of<AppLevelBloc>(context)
                             .add(SetIsFirstTime());
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginScreen()));
+                        context.go('/login');
                       },
                       child: Text(
                         "Get Started",

@@ -20,3 +20,5 @@ TextStyle boldTextStyle = GoogleFonts.gelasio(
 
 TextStyle greyTextStyle =
     GoogleFonts.gelasio(fontSize: 14, fontWeight: regular, color: kGreyColor);
+TextStyle numberStyle =
+    GoogleFonts.nunitoSans(fontSize: 14, fontWeight: regular);
