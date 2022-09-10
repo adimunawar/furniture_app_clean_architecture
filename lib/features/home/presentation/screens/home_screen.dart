@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
                 maxCrossAxisExtent: 200.0,
                 mainAxisExtent: 255,
                 mainAxisSpacing: 15.0,
-                crossAxisSpacing: 10.0,
+                crossAxisSpacing: 15.0,
                 childAspectRatio: 1.0,
               ),
               delegate: SliverChildBuilderDelegate(

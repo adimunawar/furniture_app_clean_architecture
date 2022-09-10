@@ -1,9 +1,4 @@
-import 'package:e_furniture/core/ui_helper/theme.dart';
-import 'package:e_furniture/features/favorite/presentation/screen/favorite_screen.dart';
-import 'package:e_furniture/features/home/presentation/screens/home_screen.dart';
-import 'package:e_furniture/features/notification/presentation/screen/notification_screen.dart';
-import 'package:e_furniture/features/profile/presentation/screen/profile_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:e_furniture/modules.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
